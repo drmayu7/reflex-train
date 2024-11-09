@@ -7,23 +7,30 @@ from rxconfig import config
 
 class State(rx.State):
     """The app state."""
-    label = "Hello, World!"
+    label = "Welcome to Reflex!"
 
-    def change_label(self):
-        self.label = "Hello, Reflex!"
+    def handle_title_input_change(self, value: str):
+        """Handle the input change event."""
+        self.label = value
 
+    def did_click(self):
+        """Handle the click event."""
+        self.label = "Hello, Reflex clicking!"
 
 def index() -> rx.Component:
     # Welcome Page (Index)
     return rx.container(
         rx.color_mode.button(position="top-right"),
         rx.vstack(
-            rx.heading(State.label," Welcome to Reflex!", size="9"),
+            rx.heading(State.label, size="9"),
             rx.text(
                 "Get started by editing ",
                 rx.code(f"{config.app_name}/{config.app_name}.py"),
                 size="5",
             ),
+            rx.input(default_value=State.label,
+                     on_click=State.did_click,
+                     on_change=State.handle_title_input_change),
             rx.link(
                 rx.button("Check out our docs!"),
                 href="https://reflex.dev/docs/getting-started/introduction/",
