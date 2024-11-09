@@ -1,6 +1,7 @@
 import reflex as rx
 
-from navigation import routes
+import navigation.state
+from navigation import routes, state
 
 def navbar_link(text: str, url: str) -> rx.Component:
     return rx.link(
@@ -63,10 +64,10 @@ def nav_bar() -> rx.Component:
                         rx.icon("menu", size=30)
                     ),
                     rx.menu.content(
-                        rx.menu.item("Home"),
-                        rx.menu.item("About"),
-                        rx.menu.item("Pricing"),
-                        rx.menu.item("Contact"),
+                        rx.menu.item("Home",on_click=state.NavState.to_home),
+                        rx.menu.item("About",on_click=state.NavState.to_about),
+                        rx.menu.item("Pricing",on_click=state.NavState.to_pricing),
+                        rx.menu.item("Contact",on_click=state.NavState.to_contact),
                         rx.menu.separator(),
                         rx.menu.item("Log in"),
                         rx.menu.item("Sign up"),

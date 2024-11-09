@@ -4,13 +4,13 @@ from ui.base import base_page
 from . import register_page
 from navigation import routes
 
-@register_page(routes.PRICING_ROUTE)
-def pricing_page() -> rx.Component:
+@register_page(routes.CONTACT_US_ROUTE)
+def contact_page() -> rx.Component:
     # About Us Page
     my_child = rx.vstack(
-        rx.heading('Pricing', size="9"),
+        rx.heading('Contact', size="9"),
         rx.text(
-            "Our pricing",
+            "Contact us now!",
         ),
         spacing="5",
         justify="center",

@@ -2,10 +2,10 @@
 
 import reflex as rx
 
+from pages.about import about_page
 from rxconfig import config
-
 from ui.base import base_page
-from pages import about,pricing
+from pages import page_registry
 from navigation import routes
 
 class State(rx.State):
@@ -47,6 +47,6 @@ def index() -> rx.Component:
                      )
 
 app = rx.App()
-app.add_page(index)
-app.add_page(about.about_page, route=routes.ABOUT_US_ROUTE)
-app.add_page(pricing.pricing_page, route=routes.PRICING_ROUTE)
+app.add_page(index,route=routes.HOME_ROUTE)
+for route, page_func in page_registry.items():
+    app.add_page(page_func, route=route)
