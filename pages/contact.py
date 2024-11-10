@@ -1,10 +1,9 @@
 import reflex as rx
 
 from ui.base import base_page
-from . import register_page
 from navigation import routes
 
-@register_page(routes.CONTACT_US_ROUTE)
+@rx.page(route=routes.CONTACT_US_ROUTE)
 def contact_page() -> rx.Component:
     # About Us Page
     my_child = rx.vstack(

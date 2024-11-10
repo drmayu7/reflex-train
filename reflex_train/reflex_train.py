@@ -2,11 +2,10 @@
 
 import reflex as rx
 
-from pages.about import about_page
 from rxconfig import config
 from ui.base import base_page
-from pages import page_registry
 from navigation import routes
+from pages import about,contact,pricing
 
 class State(rx.State):
     """The app state."""
@@ -48,5 +47,3 @@ def index() -> rx.Component:
 
 app = rx.App()
 app.add_page(index,route=routes.HOME_ROUTE)
-for route, page_func in page_registry.items():
-    app.add_page(page_func, route=route)
