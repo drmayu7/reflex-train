@@ -1,10 +1,14 @@
 import reflex as rx
 import asyncio
 
-from sqlalchemy.util import await_only
-
 from ui.base import base_page
 from navigation import routes
+
+class ContactEntryModel(rx.Model,table=True):
+    first_name:str
+    last_name:str
+    email:str
+    message:str
 
 class ContactState(rx.State):
     form_data:dict = {}
