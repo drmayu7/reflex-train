@@ -32,9 +32,3 @@ class ContactState(rx.State):
         await asyncio.sleep(6)
         self.did_submit = False
         yield
-
-    # async def countdown(self):
-    #     while self.timeleft > 0:
-    #         await asyncio.sleep(1)
-    #         self.timeleft -= 1
-    #         yield
