@@ -3,9 +3,11 @@
 import reflex as rx
 
 from rxconfig import config
-from ui.base import base_page
-from navigation import routes
-from pages import about,contact,pricing
+from reflex_train.ui.base import base_page
+from reflex_train.navigation import routes
+
+from .contact import contact_page
+from . import navigation
 
 class State(rx.State):
     """The app state."""
@@ -32,7 +34,7 @@ def index() -> rx.Component:
                 size="5",
             ),
             # rx.button('About Us',on_click=State.did_click),
-            rx.link(rx.button('About Us'),href=routes.ABOUT_US_ROUTE), # for button - always use this type to route link
+            rx.link(rx.button('About Us'), href=routes.ABOUT_US_ROUTE), # for button - always use this type to route link
             spacing="5",
             justify="center",
             text_align="center",
@@ -46,4 +48,5 @@ def index() -> rx.Component:
                      )
 
 app = rx.App()
-app.add_page(index,route=routes.HOME_ROUTE)
+app.add_page(index, route=routes.HOME_ROUTE)
+app.add_page(contact_page,route=navigation.routes.CONTACT_US_ROUTE)

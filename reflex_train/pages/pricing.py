@@ -1,7 +1,7 @@
 import reflex as rx
 
-from ui.base import base_page
-from navigation import routes
+from ..ui.base import base_page
+from ..navigation import routes
 
 @rx.page(route=routes.PRICING_ROUTE)
 def pricing_page() -> rx.Component:

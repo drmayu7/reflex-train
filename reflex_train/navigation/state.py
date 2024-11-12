@@ -1,5 +1,5 @@
 import reflex as rx
-from navigation import routes
+from . import routes
 
 class NavState(rx.State):
     def to_home(self):
