@@ -37,9 +37,9 @@ class ContactState(rx.State):
         self.did_submit = False
         yield
 
-        def list_entries(self):
-            with rx.session() as session:
-                entries = session.exec(
-                    select(ContactEntryModel)
-                ).all()
-                self.entries = entries
+    def list_entries(self):
+        with rx.session() as session:
+            entries = session.exec(
+                select(ContactEntryModel)
+            ).all()
+            self.entries = entries
