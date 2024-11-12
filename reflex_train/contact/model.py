@@ -8,6 +8,7 @@ def get_utc_now() -> datetime:
     return datetime.now(timezone.utc)
 
 class ContactEntryModel(rx.Model,table=True):
+    user_id:int | None = None
     first_name:str
     last_name:str = Field(nullable=True,default=None)
     email:str = Field(nullable=True,default=None)
