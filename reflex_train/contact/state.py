@@ -6,13 +6,7 @@ from reflex_train.contact.model import ContactEntryModel
 class ContactState(rx.State):
     form_data:dict = {}
     did_submit:bool = False
-    # timeleft:int = 5
 
-    # @rx.var
-    # def timeleft_label(self):
-    #     if self.timeleft < 1:
-    #         return "Time's up!"
-    #     return f"Time left: {self.timeleft} seconds"
 
     @rx.var
     def thank_you(self):
