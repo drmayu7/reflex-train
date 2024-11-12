@@ -1,14 +1,28 @@
+from datetime import datetime,timezone
+import sqlalchemy
+
 import reflex as rx
 import asyncio
+from sqlmodel import Field
 
 from ui.base import base_page
 from navigation import routes
 
+def get_utc_now() -> datetime:
+    return datetime.now(timezone.utc)
+
 class ContactEntryModel(rx.Model,table=True):
     first_name:str
-    last_name:str
-    email:str
+    last_name:str = Field(nullable=True,default=None)
+    email:str = Field(nullable=True,default=None)
     message:str
+    created_at: datetime = Field(default=get_utc_now(),
+                                 nullable=False,
+                                 sa_type=sqlalchemy.DateTime(timezone=True),
+                                 sa_column_kwargs={
+                                     "server_default": sqlalchemy.func.now()
+                                        },
+                                 )
 
 class ContactState(rx.State):
     form_data:dict = {}
@@ -28,21 +42,33 @@ class ContactState(rx.State):
 
     async def handle_submit(self, form_data: dict):
         """Handle the form submit."""
-        print(form_data)
+        # print(form_data)
         self.form_data = form_data
-        self.did_submit = True
-        yield
+        data = {} #change to validate using pydantic later
+        for k,v in form_data.items(): #
+            if v == "" or v is None: #
+                continue #
+            data[k] = v #
+
+        with rx.session() as session:
+            db_entry = ContactEntryModel(**data)
+            session.add(db_entry)
+            session.commit()
+            self.did_submit = True
+            yield
         await asyncio.sleep(2)
         self.did_submit = False
         yield
 
-    async def countdown(self):
-        while self.timeleft > 0:
-            await asyncio.sleep(1)
-            self.timeleft -= 1
-            yield
+    # async def countdown(self):
+    #     while self.timeleft > 0:
+    #         await asyncio.sleep(1)
+    #         self.timeleft -= 1
+    #         yield
 
-@rx.page(route=routes.CONTACT_US_ROUTE,on_load=ContactState.countdown)
+@rx.page(route=routes.CONTACT_US_ROUTE,
+         # on_load=ContactState.countdown # uncomment this line to start the countdown
+         )
 def contact_page() -> rx.Component:
     my_form = rx.form(
         rx.vstack(
@@ -56,7 +82,6 @@ def contact_page() -> rx.Component:
             rx.input(
                 name="last_name",
                 placeholder="Last Name",
-                required=True,
                 width="100%",
             ),
                 width="100%"
@@ -71,7 +96,6 @@ def contact_page() -> rx.Component:
             rx.text_area(
                 name="message",
                 placeholder="Your message",
-                required=True,
                 width="100%",
             ),
             rx.button("Submit", type="submit"),
@@ -85,7 +109,7 @@ def contact_page() -> rx.Component:
         rx.text(
             "Contact us now!",
         ),
-        rx.text(ContactState.timeleft_label),
+        # rx.text(ContactState.timeleft_label),
         rx.cond(ContactState.did_submit,ContactState.thank_you,""),
         rx.desktop_only(
             rx.box(
