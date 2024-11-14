@@ -4,6 +4,7 @@ from .state import BlogPostState
 from .forms import blog_post_add_form
 from .add import blog_post_add_page
 from .detail import blog_post_detail_page
+from .edit import blog_post_edit_page
 
 __all__ = [
     "BlogPostModel",
@@ -11,5 +12,6 @@ __all__ = [
     "BlogPostState",
     "blog_post_add_form",
     "blog_post_add_page",
-    "blog_post_detail_page"
+    "blog_post_detail_page",
+    "blog_post_edit_page"
 ]
