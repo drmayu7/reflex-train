@@ -1,9 +1,9 @@
 *.db
-*.py[cod]
-.web
-__pycache__/
-assets/external/
-*.xml
 *.iml
-alembic/
+*.py[cod]
+*.xml
+.web
 /alembic.ini
+__pycache__/
+alembic/
+assets/external/
